@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ELTE.Sudoku.View.GamePage"
+             Title="Escape">
+
+    <Grid Margin="4" RowSpacing="8">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <HorizontalStackLayout Grid.Row="0" HorizontalOptions="CenterAndExpand">
+            <Button Text="&#x25B6;" Command="{Binding PauseGameCommand}" IsEnabled="{Binding IsGameNotOver}" IsVisible="{Binding IsGamePaused}"/>
+            <Button Text="&#x23F8;" Command="{Binding PauseGameCommand}" IsEnabled="{Binding IsGameNotOver}" IsVisible="{Binding IsGameNotPaused}" />
+            <Button Text="11" Command="{Binding NewGameCommand}" CommandParameter="11" />
+            <Button Text="15" Command="{Binding NewGameCommand}" CommandParameter="15" />
+            <Button Text="21" Command="{Binding NewGameCommand}" CommandParameter="21" />
+            <Button Text="Fájl" Command="{Binding ExitCommand}" IsEnabled="{Binding IsGamePaused}"/>
+        </HorizontalStackLayout>
+
+        <Grid Grid.Row="1"
+            BindableLayout.ItemsSource="{Binding Fields}"
+            RowDefinitions="{Binding GameTableRows}"
+            ColumnDefinitions="{Binding GameTableColumns}"
+            ColumnSpacing="4"
+            RowSpacing="4">
+
+            <!-- Grid elements are buttons -->
+            <BindableLayout.ItemTemplate>
+                <DataTemplate>
+                    <Button Grid.Row="{Binding X}"
+                            Grid.Column="{Binding Y}"
+                            Text="{Binding Text}"
+                            IsEnabled="True"
+                            VerticalOptions="FillAndExpand"
+                            HorizontalOptions="FillAndExpand"
+                            TextColor="Black"
+                            CornerRadius="0"
+                            Padding="0" />
+                </DataTemplate>
+            </BindableLayout.ItemTemplate>
+        </Grid>
+
+        <!-- Directional buttons -->
+        <HorizontalStackLayout HorizontalOptions="CenterAndExpand" Grid.Row="2">
+            
+            <Button Text="&#x25C0;" Command="{Binding MoveLeftCommand}" />
+            <Button Text="&#x25B2;" Command="{Binding MoveUpCommand}" />
+            <Button Text="&#x25BC;" Command="{Binding MoveDownCommand}" />
+            <Button Text="&#x25B6;" Command="{Binding MoveRightCommand}" />
+        </HorizontalStackLayout>
+
+        <HorizontalStackLayout HorizontalOptions="Start" Grid.Row="3">
+            <Label Text="Game Time:" />
+            <Label Text="{Binding GameTime}" />
+        </HorizontalStackLayout>
+    </Grid>
+</ContentPage>
